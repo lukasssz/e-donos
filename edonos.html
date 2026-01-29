@@ -3,18 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>e-donos </title>
-</head>
-<style>
- body {
+  <title>e-donos</title>
+
+  <style>
+    body {
       margin: 0;
       background: linear-gradient(135deg, #0a0f1c, #1a2333);
       min-height: 100vh;
     }
-</style>
+
+    .top {
+      position: absolute;
+      top: 2%;
+      left: 50%;
+      transform: translateX(-50%);
+
+      width: 40%;                 
+      padding: 10px;              
+
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      color: white;
+      text-align: center;
+      font-family: sans-serif;
+      font-size: 20px;            
+
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .title {
+      transition: opacity 0.2s ease;
+    }
+
+    .buttons {
+      display: none;
+      flex-direction: row;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .button1 {
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .button2 {
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 8px;
+      color: rgb(255, 255, 255);
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .button1:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+    .button2:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .top:hover,
+    .top:active {
+      width: 80%;                 
+      padding: 20px;              
+      font-size: 28px;            
+    }
+
+    .top:hover .title,
+    .top:active .title {
+      opacity: 0;
+    }
+
+    .top:hover .buttons,
+    .top:active .buttons {
+      display: flex;
+    }
+  </style>
+</head>
+
 <body>
 
- 
+  <div class="top">
+    <div class="title">e-donosy</div>
+
+    <div class="buttons">
+      <div class="button1">Donos1</div>
+      <div class="button1">Donos2</div>
+      <div class="button1">Donos3</div>
+      <div class="button2">Donos4</div>
+    </div>
+  </div>
 
 </body>
 </html>
