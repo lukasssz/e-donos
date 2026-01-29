@@ -17,21 +17,17 @@
       top: 2%;
       left: 50%;
       transform: translateX(-50%);
-
-      width: 40%;                 
-      padding: 10px;              
-
+      width: 40%;
+      padding: 10px;
       background: rgba(255, 255, 255, 0.1);
       border: 2px solid rgba(255, 255, 255, 0.3);
       border-radius: 12px;
       color: white;
       text-align: center;
       font-family: sans-serif;
-      font-size: 20px;            
-
+      font-size: 20px;
       transition: all 0.3s ease;
       cursor: pointer;
-
       display: flex;
       justify-content: center;
       align-items: center;
@@ -44,13 +40,16 @@
 
     .buttons {
       display: none;
+      width: 100%;
+      margin-top: 10px;
       flex-direction: row;
-      gap: 10px;
-      margin-top: 5px;
+      justify-content: space-between;
+      gap: 20px;
     }
 
-    .button1 {
-      padding: 8px 14px;
+    .button1, .button2, .button3, .button4 {
+      flex: 1;
+      padding: 25px;
       background: rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 8px;
@@ -58,56 +57,134 @@
       font-size: 16px;
       cursor: pointer;
       transition: background 0.2s ease;
+      text-align: center;
+      position: relative;
     }
-    .button2 {
-      padding: 8px 14px;
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.4);
+
+    .button1:hover,
+    .button2:hover,
+    .button3:hover,
+    .button4:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    
+    .arrow {
+      margin-left: 8px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      display: inline-block;
+      font-size: 20px;
+      opacity: 0.8;
+    }
+
+    .button1:hover .arrow {
+      transform: rotate(90deg);
+      opacity: 1;
+    }
+
+    .button1.open .arrow {
+      transform: rotate(90deg);
+      opacity: 1;
+    }
+
+    
+    .top.active {
+      width: 80%;
+      padding: 20px;
+      font-size: 28px;
+    }
+
+    .top.active .title {
+      opacity: 0;
+    }
+
+    .top.active .buttons {
+      display: flex;
+    }
+
+    
+    .optionList {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: white;
       border-radius: 8px;
-      color: rgb(255, 255, 255);
-      font-size: 16px;
+      padding: 15px;
+      box-sizing: border-box;
+      color: black;
+      font-size: 18px;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .optionItem {
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 6px;
       cursor: pointer;
       transition: background 0.2s ease;
     }
 
-    .button1:hover {
-      background: rgba(255, 255, 255, 0.35);
-    }
-    .button2:hover {
-      background: rgba(255, 255, 255, 0.35);
-    }
-
-    .top:hover,
-    .top:active {
-      width: 80%;                 
-      padding: 20px;              
-      font-size: 28px;            
-    }
-
-    .top:hover .title,
-    .top:active .title {
-      opacity: 0;
-    }
-
-    .top:hover .buttons,
-    .top:active .buttons {
-      display: flex;
+    .optionItem:hover {
+      background: #e0e0e0;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="top">
+  <div class="top" id="topBar">
     <div class="title">e-donosy</div>
 
     <div class="buttons">
-      <div class="button1">Donos1</div>
-      <div class="button1">Donos2</div>
-      <div class="button1">Donos3</div>
-      <div class="button2">Donos4</div>
+      <div class="button1" id="btn1">
+        Chcę złożyć donos
+        <span class="arrow" id="arrowBtn1">›</span>
+
+        <div class="optionList" id="optionList">
+          <div class="optionItem">Obcy</div>
+          <div class="optionItem">Znajomy</div>
+          <div class="optionItem">Rodzina</div>
+          <div class="optionItem">Inne</div>
+        </div>
+      </div>
+
+      <div class="button2">Donos2</div>
+      <div class="button3">Donos3</div>
+      <div class="button4">Ranking</div>
     </div>
   </div>
+
+  <script>
+    const topBar = document.getElementById("topBar");
+    const btn1 = document.getElementById("btn1");
+    const optionList = document.getElementById("optionList");
+
+    
+    topBar.addEventListener("click", () => {
+      topBar.classList.toggle("active");
+    });
+
+    
+    btn1.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const isOpen = optionList.style.display === "flex";
+      optionList.style.display = isOpen ? "none" : "flex";
+      btn1.classList.toggle("open", !isOpen);
+    });
+
+    
+    document.addEventListener("click", (event) => {
+      if (!topBar.contains(event.target)) {
+        topBar.classList.remove("active");
+        optionList.style.display = "none";
+        btn1.classList.remove("open");
+      }
+    });
+  </script>
 
 </body>
 </html>
