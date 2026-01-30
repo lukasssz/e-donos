@@ -18,14 +18,14 @@
       left: 50%;
       transform: translateX(-50%);
       width: 40%;
-      padding: 10px;
+      padding: 2vh;
       background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
+      border: 0.3vh solid rgba(255, 255, 255, 0.3);
+      border-radius: 1.5vh;
       color: white;
       text-align: center;
       font-family: sans-serif;
-      font-size: 20px;
+      font-size: 2.2vh;
       transition: all 0.3s ease;
       cursor: pointer;
       display: flex;
@@ -38,60 +38,128 @@
       transition: opacity 0.2s ease;
     }
 
+   
+    .butt_account{
+      padding: 2vh;
+      width: 15vh;
+      background: rgba(255, 255, 255, 0.1);
+      border: 0.3vh solid rgba(255, 255, 255, 0.3);
+      border-radius: 1.5vh;
+      color: white;
+      font-family: sans-serif;
+      font-size: 2.2vh;
+      cursor: pointer;
+      transition: background 0.2s ease, opacity 0.2s ease;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left: 85%;
+      top: 2%;
+      z-index: 30;
+    }
+
+    .butt_account .arrow {
+      margin-left: 1vh;
+      font-size: 2.2vh;
+      opacity: 0.8;
+      transition: transform 0.2s ease;
+    }
+
+    .butt_account:hover .arrow,
+    .butt_account.open .arrow {
+      transform: rotate(90deg);
+      opacity: 1;
+    }
+
+    
+    .accountList,
+    .optionList {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transform: translateY(-1vh);
+      transition: max-height 0.35s ease, opacity 0.25s ease, transform 0.35s ease;
+      background: white;
+      border-radius: 1.2vh;
+      padding: 0 2vh;
+      box-sizing: border-box;
+      color: black;
+      font-size: 2vh;
+      flex-direction: column;
+      gap: 1.5vh;
+      z-index: 20;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+    }
+
+    .accountList.openList,
+    .optionList.openList {
+      max-height: 50vh;
+      opacity: 1;
+      transform: translateY(0);
+      padding: 2vh;
+    }
+
+    .accountItem,
+    .optionItem {
+      padding: 1.5vh;
+      background: #f0f0f0;
+      border-radius: 1vh;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .accountItem:hover,
+    .optionItem:hover {
+      background: #e0e0e0;
+    }
+
+    
     .buttons {
       display: none;
       width: 100%;
-      margin-top: 10px;
+      margin-top: 1.5vh;
       flex-direction: row;
       justify-content: space-between;
-      gap: 20px;
+      gap: 2vh;
     }
 
-    .button1, .button2, .button3, .button4 {
+    .button1, .button3, .button4 {
       flex: 1;
-      padding: 25px;
+      padding: 3vh 1vh;
       background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 8px;
+      border: 0.3vh solid rgba(255, 255, 255, 0.4);
+      border-radius: 1.2vh;
       color: white;
-      font-size: 16px;
+      font-size: 2vh;
       cursor: pointer;
       transition: background 0.2s ease;
       text-align: center;
       position: relative;
     }
 
-    .button1:hover,
-    .button2:hover,
-    .button3:hover,
-    .button4:hover {
-      background: rgba(255, 255, 255, 0.35);
-    }
-
-    
     .arrow {
-      margin-left: 8px;
+      margin-left: 1vh;
       transition: transform 0.2s ease, opacity 0.2s ease;
       display: inline-block;
-      font-size: 20px;
+      font-size: 2.2vh;
       opacity: 0.8;
     }
 
-    .button1:hover .arrow {
-      transform: rotate(90deg);
-      opacity: 1;
-    }
-
+    .button1:hover .arrow,
     .button1.open .arrow {
       transform: rotate(90deg);
       opacity: 1;
     }
 
-    
     .top.active {
       width: 80%;
-      padding: 20px;
-      font-size: 28px;
+      padding: 3vh;
+      font-size: 3vh;
     }
 
     .top.active .title {
@@ -100,36 +168,6 @@
 
     .top.active .buttons {
       display: flex;
-    }
-
-    
-    .optionList {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background: white;
-      border-radius: 8px;
-      padding: 15px;
-      box-sizing: border-box;
-      color: black;
-      font-size: 18px;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 10;
-    }
-
-    .optionItem {
-      padding: 10px;
-      background: #f0f0f0;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-
-    .optionItem:hover {
-      background: #e0e0e0;
     }
   </style>
 </head>
@@ -140,48 +178,92 @@
     <div class="title">e-donosy</div>
 
     <div class="buttons">
+
+      
       <div class="button1" id="btn1">
         Chcę złożyć donos
-        <span class="arrow" id="arrowBtn1">›</span>
+        <span class="arrow">›</span>
 
-        <div class="optionList" id="optionList">
-          <div class="optionItem">Obcy</div>
-          <div class="optionItem">Znajomy</div>
-          <div class="optionItem">Rodzina</div>
-          <div class="optionItem">Inne</div>
+        <div class="optionList" id="optionList1">
+          <div class="optionItem">Osoba ze szkoły</div>
+          <div class="optionItem">Osoba z poza szkoły</div>
         </div>
       </div>
 
-      <div class="button2">Donos2</div>
-      <div class="button3">Donos3</div>
+      <div class="button3">xyz</div>
       <div class="button4">Ranking</div>
+    </div>
+  </div>
+
+  
+  <div class="butt_account" id="accountBtn">
+    Konto
+    <span class="arrow">›</span>
+
+    <div class="accountList" id="accountList">
+      <div class="accountItem">Profil</div>
+      <div class="accountItem">Ustawienia</div>
     </div>
   </div>
 
   <script>
     const topBar = document.getElementById("topBar");
     const btn1 = document.getElementById("btn1");
-    const optionList = document.getElementById("optionList");
+    const accountBtn = document.getElementById("accountBtn");
+
+    const optionList1 = document.getElementById("optionList1");
+    const accountList = document.getElementById("accountList");
 
     
     topBar.addEventListener("click", () => {
       topBar.classList.toggle("active");
+
+      if (topBar.classList.contains("active")) {
+        accountBtn.style.opacity = "0";
+        accountBtn.style.pointerEvents = "none";
+        accountList.classList.remove("openList");
+        accountBtn.classList.remove("open");
+      } else {
+        accountBtn.style.opacity = "1";
+        accountBtn.style.pointerEvents = "auto";
+      }
     });
 
     
     btn1.addEventListener("click", (event) => {
       event.stopPropagation();
-      const isOpen = optionList.style.display === "flex";
-      optionList.style.display = isOpen ? "none" : "flex";
+      const isOpen = optionList1.classList.contains("openList");
+      optionList1.classList.toggle("openList", !isOpen);
       btn1.classList.toggle("open", !isOpen);
+
+      accountList.classList.remove("openList");
+      accountBtn.classList.remove("open");
+    });
+
+   
+    accountBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const isOpen = accountList.classList.contains("openList");
+      accountList.classList.toggle("openList", !isOpen);
+      accountBtn.classList.toggle("open", !isOpen);
+
+      optionList1.classList.remove("openList");
+      btn1.classList.remove("open");
     });
 
     
     document.addEventListener("click", (event) => {
-      if (!topBar.contains(event.target)) {
+      if (!topBar.contains(event.target) && !accountBtn.contains(event.target)) {
         topBar.classList.remove("active");
-        optionList.style.display = "none";
+
+        optionList1.classList.remove("openList");
+        accountList.classList.remove("openList");
+
         btn1.classList.remove("open");
+        accountBtn.classList.remove("open");
+
+        accountBtn.style.opacity = "1";
+        accountBtn.style.pointerEvents = "auto";
       }
     });
   </script>
