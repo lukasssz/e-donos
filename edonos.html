@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,8 @@
       margin: 0;
       background: linear-gradient(135deg, #0a0f1c, #1a2333);
       min-height: 100vh;
+      color: white;
+      font-family: sans-serif;
     }
 
     .top {
@@ -22,9 +24,7 @@
       background: rgba(255, 255, 255, 0.1);
       border: 0.3vh solid rgba(255, 255, 255, 0.3);
       border-radius: 1.5vh;
-      color: white;
       text-align: center;
-      font-family: sans-serif;
       font-size: 2.2vh;
       transition: all 0.3s ease;
       cursor: pointer;
@@ -34,23 +34,17 @@
       flex-direction: column;
     }
 
-    .title {
-      transition: opacity 0.2s ease;
-    }
+    .title { transition: opacity 0.2s ease; }
 
-   
     .butt_account{
       padding: 2vh;
       width: 15vh;
       background: rgba(255, 255, 255, 0.1);
       border: 0.3vh solid rgba(255, 255, 255, 0.3);
       border-radius: 1.5vh;
-      color: white;
-      font-family: sans-serif;
       font-size: 2.2vh;
       cursor: pointer;
-      transition: background 0.2s ease, opacity 0.2s ease;
-      text-align: center;
+      transition: opacity 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -60,22 +54,16 @@
       z-index: 30;
     }
 
-    .butt_account .arrow {
+    .arrow {
       margin-left: 1vh;
       font-size: 2.2vh;
       opacity: 0.8;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
-    .butt_account:hover .arrow,
-    .butt_account.open .arrow {
-      transform: rotate(90deg);
-      opacity: 1;
-    }
+    .open .arrow { transform: rotate(90deg); opacity: 1; }
 
-    
-    .accountList,
-    .optionList {
+    .optionList, .accountList {
       max-height: 0;
       opacity: 0;
       overflow: hidden;
@@ -84,47 +72,40 @@
       background: white;
       border-radius: 1.2vh;
       padding: 0 2vh;
-      box-sizing: border-box;
       color: black;
       font-size: 2vh;
-      flex-direction: column;
-      gap: 1.5vh;
-      z-index: 20;
       position: absolute;
       top: 100%;
       left: 0;
       width: 100%;
+      z-index: 20;
     }
 
-    .accountList.openList,
-    .optionList.openList {
+    .openList {
       max-height: 50vh;
       opacity: 1;
       transform: translateY(0);
       padding: 2vh;
     }
 
-    .accountItem,
-    .optionItem {
+    .optionItem, .accountItem {
       padding: 1.5vh;
       background: #f0f0f0;
       border-radius: 1vh;
+      margin-bottom: 1vh;
       cursor: pointer;
       transition: background 0.2s ease;
     }
 
-    .accountItem:hover,
-    .optionItem:hover {
+    .optionItem:hover, .accountItem:hover {
       background: #e0e0e0;
     }
 
-    
     .buttons {
       display: none;
       width: 100%;
       margin-top: 1.5vh;
       flex-direction: row;
-      justify-content: space-between;
       gap: 2vh;
     }
 
@@ -134,41 +115,14 @@
       background: rgba(255, 255, 255, 0.2);
       border: 0.3vh solid rgba(255, 255, 255, 0.4);
       border-radius: 1.2vh;
-      color: white;
       font-size: 2vh;
       cursor: pointer;
-      transition: background 0.2s ease;
-      text-align: center;
       position: relative;
+      text-align: center;
     }
 
-    .arrow {
-      margin-left: 1vh;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-      display: inline-block;
-      font-size: 2.2vh;
-      opacity: 0.8;
-    }
-
-    .button1:hover .arrow,
-    .button1.open .arrow {
-      transform: rotate(90deg);
-      opacity: 1;
-    }
-
-    .top.active {
-      width: 80%;
-      padding: 3vh;
-      font-size: 3vh;
-    }
-
-    .top.active .title {
-      opacity: 0;
-    }
-
-    .top.active .buttons {
-      display: flex;
-    }
+    .top.active .buttons { display: flex; }
+    .top.active .title { opacity: 0; }
   </style>
 </head>
 
@@ -178,31 +132,26 @@
     <div class="title">e-donosy</div>
 
     <div class="buttons">
-
-      
       <div class="button1" id="btn1">
-        Chcę złożyć donos
-        <span class="arrow">›</span>
+        Chcę złożyć donos <span class="arrow">›</span>
 
         <div class="optionList" id="optionList1">
-          <div class="optionItem">Osoba ze szkoły</div>
-          <div class="optionItem">Osoba z poza szkoły</div>
+          <div class="optionItem" onclick="location.href='szkola.html'">Osoba ze szkoły</div>
+          <div class="optionItem" onclick="location.href='pozaszkola.html'">Osoba z poza szkoły</div>
         </div>
       </div>
 
-      <div class="button3">xyz</div>
-      <div class="button4">Ranking</div>
+      <div class="button3" onclick="location.href='top.html'">Top donosy</div>
+      <div class="button4" onclick="location.href='ranking.html'">Ranking</div>
     </div>
   </div>
 
-  
   <div class="butt_account" id="accountBtn">
-    Konto
-    <span class="arrow">›</span>
+    Konto <span class="arrow">›</span>
 
     <div class="accountList" id="accountList">
-      <div class="accountItem">Profil</div>
-      <div class="accountItem">Ustawienia</div>
+      <div class="accountItem" onclick="location.href='profil.html'">Profil</div>
+      <div class="accountItem" onclick="location.href='ustawienia.html'">Ustawienia</div>
     </div>
   </div>
 
@@ -214,7 +163,6 @@
     const optionList1 = document.getElementById("optionList1");
     const accountList = document.getElementById("accountList");
 
-    
     topBar.addEventListener("click", () => {
       topBar.classList.toggle("active");
 
@@ -229,29 +177,28 @@
       }
     });
 
-    
     btn1.addEventListener("click", (event) => {
+      if (optionList1.contains(event.target)) return;
+
       event.stopPropagation();
-      const isOpen = optionList1.classList.contains("openList");
-      optionList1.classList.toggle("openList", !isOpen);
-      btn1.classList.toggle("open", !isOpen);
+      optionList1.classList.toggle("openList");
+      btn1.classList.toggle("open");
 
       accountList.classList.remove("openList");
       accountBtn.classList.remove("open");
     });
 
-   
     accountBtn.addEventListener("click", (event) => {
+      if (accountList.contains(event.target)) return;
+
       event.stopPropagation();
-      const isOpen = accountList.classList.contains("openList");
-      accountList.classList.toggle("openList", !isOpen);
-      accountBtn.classList.toggle("open", !isOpen);
+      accountList.classList.toggle("openList");
+      accountBtn.classList.toggle("open");
 
       optionList1.classList.remove("openList");
       btn1.classList.remove("open");
     });
 
-    
     document.addEventListener("click", (event) => {
       if (!topBar.contains(event.target) && !accountBtn.contains(event.target)) {
         topBar.classList.remove("active");
