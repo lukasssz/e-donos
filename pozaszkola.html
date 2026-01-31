@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Formularz zgłoszeniowy</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 5vh;
+      background: #f5f5f5;
+      font-family: sans-serif;
+    }
+
+    .form-container {
+      max-width: 650px;
+      margin: auto;
+      background: white;
+      padding: 3vh;
+      border-radius: 1vh;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .question {
+      margin-bottom: 3vh;
+    }
+
+    .question label {
+      display: block;
+      font-size: 2.2vh;
+      margin-bottom: 1vh;
+      font-weight: bold;
+    }
+
+    .question input,
+    .question textarea {
+      width: 100%;
+      padding: 1.5vh;
+      font-size: 2vh;
+      border: 1px solid #ccc;
+      border-radius: 0.8vh;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 10vh;
+    }
+
+   
+    .regulamin-box {
+      background: #fafafa;
+      border: 1px solid #ccc;
+      padding: 2vh;
+      border-radius: 1vh;
+      margin-bottom: 2vh;
+      position: relative;
+    }
+
+    .regulamin-content {
+      max-height: 10vh;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .regulamin-content.open {
+      max-height: 100vh;
+    }
+
+    .toggle-arrow {
+      cursor: pointer;
+      font-size: 2.5vh;
+      user-select: none;
+      margin-top: 1vh;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-arrow.open {
+      transform: rotate(180deg);
+    }
+
+    
+    button {
+      margin-top: 2vh;
+      padding: 1.8vh 3vh;
+      font-size: 2vh;
+      background: #1a2333;
+      color: white;
+      border: none;
+      border-radius: 0.8vh;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:disabled {
+      background: #888;
+      cursor: not-allowed;
+    }
+
+    button:hover:not(:disabled) {
+      background: #0a0f1c;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="form-container">
+    <h2>Formularz zgłoszeniowy</h2>
+
+    <form action="send2.php" method="POST" enctype="multipart/form-data">
+
+      
+      <div class="question">
+        <label>1. Twoję imię: </label>
+        <input type="text" name="imię">
+      </div>
+      
+      
+      <div class="question">
+        <label>2. Opisz jak wyglądała ta osoba: </label>
+        <input type="text" name="osoba">
+      </div>
+
+
+      
+      <div class="question">
+        <label>3. Gdzie miała miejsce sytuacja?</label>
+        <input type="text" name="miejsce">
+      </div>
+
+      
+      <div class="question">
+        <label>4. Opisz dokładnie, co się stało:</label>
+        <textarea name="opis"></textarea>
+      </div>
+
+      
+      <div class="question">
+        <label>5. Dodaj zdjęcia lub nagrania (opcjonalnie):</label>
+        <input type="file" name="media" accept="image/*,video/*" multiple>
+      </div>
+
+      
+      <div class="regulamin-box">
+        <strong>Regulamin (kliknij, aby rozwinąć)</strong>
+
+        <div class="regulamin-content" id="regulaminText">
+          <p><strong>Regulamin serwisu e-Donos</strong></p>
+
+          <p>Serwis e-Donos jest projektem satyrycznym oraz parodią formularzy zgłoszeniowych.
+          Nie jest narzędziem do zgłaszania prawdziwych zdarzeń ani osób.</p>
+
+          <p>Wszelkie treści publikowane w serwisie muszą dotyczyć fikcyjnych postaci,
+          nie mogą umożliwiać identyfikacji rzeczywistych osób,
+          nie mogą zawierać prawdziwych danych osobowych.</p>
+
+          <p>Zabrania się w szczególności podawania prawdziwych imion, nazwisk, klas, szkół,
+          przesyłania zdjęć, nagrań lub dokumentów przedstawiających realne osoby,
+          publikowania treści mogących naruszać dobra osobiste.</p>
+
+          <p>Administrator serwisu nie weryfikuje treści,
+          nie ponosi odpowiedzialności za treści użytkowników,
+          nie wykorzystuje danych w celu identyfikacji osób.</p>
+
+          <p>Każdy użytkownik oświadcza, że wszystkie dane są fikcyjne,
+          korzysta z serwisu wyłącznie w celach humorystycznych,
+          ponosi pełną odpowiedzialność za przesłane treści.</p>
+
+          <p>Administrator zastrzega sobie prawo do usuwania treści
+          oraz blokady dostępu bez podania przyczyny.</p>
+        </div>
+
+        <span class="toggle-arrow" id="toggleArrow">▼</span>
+      </div>
+
+      
+      <label>
+        <input type="checkbox" id="acceptRules">
+        Akceptuję regulamin
+      </label>
+
+      <br>
+
+      
+      <button type="submit" id="submitBtn" disabled>Wyślij</button>
+
+    </form>
+  </div>
+
+<script>
+  const arrow = document.getElementById("toggleArrow");
+  const regulamin = document.getElementById("regulaminText");
+  const checkbox = document.getElementById("acceptRules");
+  const submitBtn = document.getElementById("submitBtn");
+
+
+  const field1 = document.querySelector('input[name="imię"]');
+  const field2 = document.querySelector('input[name="osoba"]');
+  const field3 = document.querySelector('input[name="miejsce"]');
+  const field4 = document.querySelector('textarea[name="opis"]');
+
+  
+  function validateForm() {
+    const allFilled =
+      field1.value.trim() !== "" &&
+      field2.value.trim() !== "" &&
+      field3.value.trim() !== "" &&
+      field4.value.trim() !== "";
+
+    const rulesAccepted = checkbox.checked;
+
+    submitBtn.disabled = !(allFilled && rulesAccepted);
+  }
+
+  
+  arrow.addEventListener("click", () => {
+    regulamin.classList.toggle("open");
+    arrow.classList.toggle("open");
+  });
+
+ 
+  checkbox.addEventListener("change", validateForm);
+  field1.addEventListener("input", validateForm);
+  field2.addEventListener("input", validateForm);
+  field3.addEventListener("input", validateForm);
+  field4.addEventListener("input", validateForm);
+</script>
+
+
+</body>
+</html>
