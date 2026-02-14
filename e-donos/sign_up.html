@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Rejestracja</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        padding: 4vh 2vw;
+        display: flex;
+        justify-content: center;
+    }
+
+    .box {
+        width: 95%;
+        max-width: 32rem;
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 1rem rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+    }
+
+    label {
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    input {
+        width: 94%;
+        padding: 1.1rem;
+        margin-top: 0.4rem;
+        margin-bottom: 0.6rem;
+        border-radius: 0.6rem;
+        border: 1px solid #aaa;
+        font-size: 1.2rem;
+    }
+
+    .password-box {
+        position: relative;
+    }
+
+    .toggle {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #007bff;
+        font-size: 1rem;
+    }
+
+    button {
+        width: 100%;
+        padding: 1.2rem;
+        background: #007bff;
+        border: none;
+        color: white;
+        font-size: 1.3rem;
+        border-radius: 0.6rem;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
+
+    button:disabled {
+        background: #9bbff1;
+        cursor: not-allowed;
+    }
+
+    .rule {
+        font-size: 1rem;
+        margin: 0.2rem 0 0.5rem 0.2rem;
+        color: #ff4c4c;
+        display: none;
+    }
+
+    .rule.ok {
+        color: #4caf50;
+    }
+
+    /* MOBILE BOOST */
+    @media (max-width: 600px) {
+        .box {
+            padding: 2.5rem;
+            border-radius: 1.4rem;
+        }
+
+        input {
+            padding: 1.4rem;
+            font-size: 1.35rem;
+        }
+
+        button {
+            padding: 1.4rem;
+            font-size: 1.45rem;
+        }
+
+        label {
+            font-size: 1.25rem;
+        }
+
+        .toggle {
+            font-size: 1.2rem;
+        }
+
+        .rule {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Rejestracja</h2>
+
+    <form action="sign_up.php" method="POST">
+
+        <input type="text" name="website" style="display:none">
+        <input type="hidden" name="form_time" value="<?= time() ?>">
+
+        <label>Login</label>
+        <input type="text" name="login" id="login" required>
+        <div class="rule loginRule" id="loginLength">• Minimum 6 znaków</div>
+        <div class="rule loginRule" id="loginNoSpace">• Bez spacji</div>
+        <div class="rule loginRule" id="loginAscii">• Bez emoji / tylko ASCII</div>
+        <div class="rule loginRule" id="loginChars">• Tylko litery, cyfry i _</div>
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <label>Hasło</label>
+        <div class="password-box">
+            <input type="password" id="pass" name="password" required>
+            <span class="toggle" onclick="togglePass('pass')">Pokaż</span>
+        </div>
+        <div class="rule passRule" id="passLength">• Minimum 6 znaków</div>
+        <div class="rule passRule" id="passSpecial">• Co najmniej 1 znak specjalny</div>
+
+        <label>Potwierdź hasło</label>
+        <div class="password-box">
+            <input type="password" id="pass2" name="password_confirm" required>
+            <span class="toggle" onclick="togglePass('pass2')">Pokaż</span>
+        </div>
+        <div class="rule passRule" id="passMatch">• Hasła muszą być takie same</div>
+
+        <button type="submit" id="submitBtn" disabled>Zarejestruj się</button>
+    </form>
+</div>
+
+<script>
+function togglePass(id) {
+    const field = document.getElementById(id);
+    const toggle = field.nextElementSibling;
+    field.type = field.type === "password" ? "text" : "password";
+    toggle.textContent = field.type === "password" ? "Pokaż" : "Ukryj";
+}
+
+const login = document.getElementById("login");
+const pass = document.getElementById("pass");
+const pass2 = document.getElementById("pass2");
+const submitBtn = document.getElementById("submitBtn");
+
+function showRules(selector) {
+    document.querySelectorAll(selector).forEach(r => r.style.display = "block");
+}
+
+login.addEventListener("input", () => {
+    showRules(".loginRule");
+    const v = login.value;
+    document.getElementById("loginLength").classList.toggle("ok", v.length >= 6);
+    document.getElementById("loginNoSpace").classList.toggle("ok", !v.includes(" "));
+    document.getElementById("loginAscii").classList.toggle("ok", /^[\x20-\x7E]+$/.test(v));
+    document.getElementById("loginChars").classList.toggle("ok", /^[A-Za-z0-9_]+$/.test(v));
+    validateAll();
+});
+
+pass.addEventListener("input", () => {
+    showRules(".passRule");
+    const v = pass.value;
+    document.getElementById("passLength").classList.toggle("ok", v.length >= 6);
+    document.getElementById("passSpecial").classList.toggle("ok", /[\W_]/.test(v));
+    document.getElementById("passMatch").classList.toggle("ok", v === pass2.value);
+    validateAll();
+});
+
+pass2.addEventListener("input", () => {
+    showRules(".passRule");
+    document.getElementById("passMatch").classList.toggle("ok", pass.value === pass2.value);
+    validateAll();
+});
+
+function validateAll() {
+    const ok =
+        document.getElementById("loginLength").classList.contains("ok") &&
+        document.getElementById("loginNoSpace").classList.contains("ok") &&
+        document.getElementById("loginAscii").classList.contains("ok") &&
+        document.getElementById("loginChars").classList.contains("ok") &&
+        document.getElementById("passLength").classList.contains("ok") &&
+        document.getElementById("passSpecial").classList.contains("ok") &&
+        document.getElementById("passMatch").classList.contains("ok");
+
+    submitBtn.disabled = !ok;
+}
+</script>
+
+</body>
+</html>

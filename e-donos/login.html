@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Logowanie</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+        padding: 4vh 2vw;
+        display: flex;
+        justify-content: center;
+    }
+
+    .box {
+        width: 95%;
+        max-width: 32rem;
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 1rem rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+    }
+
+    label {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    input {
+        width: 94%;
+        padding: 1.1rem;
+        margin-top: 0.4rem;
+        margin-bottom: 1rem;
+        border-radius: 0.6rem;
+        border: 1px solid #aaa;
+        font-size: 1.2rem;
+    }
+
+    .password-box {
+        position: relative;
+    }
+
+    .toggle {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 1rem;
+        color: #007bff;
+    }
+
+    button {
+        width: 100%;
+        padding: 1.2rem;
+        background: #007bff;
+        border: none;
+        color: white;
+        font-size: 1.3rem;
+        border-radius: 0.6rem;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
+
+    button:hover {
+        background: #0056c7;
+    }
+
+    @media (max-width: 600px) {
+        .box {
+            padding: 2.5rem;
+            border-radius: 1.4rem;
+        }
+
+        input {
+            padding: 1.4rem;
+            font-size: 1.35rem;
+        }
+
+        button {
+            padding: 1.4rem;
+            font-size: 1.45rem;
+        }
+
+        label {
+            font-size: 1.25rem;
+        }
+
+        .toggle {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Logowanie</h2>
+
+    <form action="login.php" method="POST">
+
+        <label>Login lub Email</label>
+        <input type="text" name="login" required>
+
+        <label>Hasło</label>
+        <div class="password-box">
+            <input type="password" id="pass" name="password" required>
+            <span class="toggle" onclick="togglePass('pass')">Pokaż</span>
+        </div>
+
+        <button type="submit">Zaloguj</button>
+    </form>
+</div>
+
+<script>
+function togglePass(id) {
+    const field = document.getElementById(id);
+    const toggle = field.nextElementSibling;
+    field.type = field.type === "password" ? "text" : "password";
+    toggle.textContent = field.type === "password" ? "Pokaż" : "Ukryj";
+}
+</script>
+
+</body>
+</html>
